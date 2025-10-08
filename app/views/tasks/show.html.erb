@@ -1,0 +1,6 @@
+<h1><%= @task.title %></h1>
+<p><%= @task.description %></p>
+<p>Статус: <%= @task.done ? "выполнена" : "не выполнена" %></p>
+
+<%= link_to "Редактировать", edit_task_path(@task) %> |
+<%= link_to "Назад к списку", tasks_path %>

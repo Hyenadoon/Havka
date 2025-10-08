@@ -1,0 +1,28 @@
+<h1>Анализ продуктов на фото</h1>
+
+<%= form_with url: analyze_vision_path, multipart: true, local: false do |f| %>
+  <div>
+    <%= f.label :image, "Выберите фото" %><br>
+    <%= f.file_field :image %>
+  </div>
+
+  <div style="margin-top: 1rem;">
+    <%= f.submit "Анализировать", class: "button" %>
+  </div>
+<% end %>
+
+<!-- Контейнер для Turbo Stream -->
+<div id="vision_results">
+  <% if @result.present? %>
+    <%= render partial: "results", locals: { result: @result } %>
+  <% end %>
+</div>
+
+
+
+
+
+
+
+
+
