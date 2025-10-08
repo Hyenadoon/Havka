@@ -17,7 +17,7 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem "openai", "~> 0.23.2"
+gem "openai", "~> 0.30.0"
 gem "image_processing"
 gem "mini_magick"
 gem 'dotenv-rails', groups: [:development, :test]
