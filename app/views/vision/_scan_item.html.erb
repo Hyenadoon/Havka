@@ -1,0 +1,10 @@
+<%= turbo_frame_tag "scan_item_#{item.id}" do %>
+  <div class="scan-item" style="display:flex; gap:1rem; margin-bottom:0.5rem;">
+    <input type="text" value="<%= item.name %>" data-scan-item="name" placeholder="Название">
+    <input type="number" value="<%= item.quantity %>" data-scan-item="quantity" style="width:50px;">
+    <input type="text" value="<%= item.unit %>" data-scan-item="unit" style="width:80px;" placeholder="Ед.изм">
+    <input type="number" value="<%= item.grams %>" data-scan-item="grams" style="width:60px;" placeholder="грамм">
+    <button data-action="click->scan#delete" data-scan-id="<%= item.id %>">Удалить</button>
+  </div>
+<% end %>
+

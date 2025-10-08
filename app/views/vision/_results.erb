@@ -1,0 +1,7 @@
+<div data-controller="scan">
+  <div id="scan_items_container">
+    <%= render partial: "scan_item", collection: result, as: :item, formats: [:html] %>
+  </div>
+
+  <button data-action="click->scan#add" style="margin-top:1rem;">Добавить продукт</button>
+</div>
