@@ -13,7 +13,7 @@ class FoodAnalyzerService
     # 2️⃣ Отправляем запрос в OpenAI
     client = OpenAI::Client.new(api_key: ENV["OPENAI_API_KEY"])
     response = client.responses.create(
-      model: "gpt-4.1-mini",
+      model: "gpt-5-mini",
       input: [
         {
           role: "user",

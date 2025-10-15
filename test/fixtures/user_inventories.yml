@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  product: one
+  product_caliber: one
+  quantity: 9.99
+  unit: MyString
+
+two:
+  user: two
+  product: two
+  product_caliber: two
+  quantity: 9.99
+  unit: MyString

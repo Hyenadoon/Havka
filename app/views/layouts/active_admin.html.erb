@@ -1,0 +1,16 @@
+<!-- app/views/layouts/active_admin.html.erb -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin - Todo App</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%# ActiveAdmin CSS через Sprockets %>
+    <%= stylesheet_link_tag "active_admin", media: "all", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "active_admin", "data-turbo-track": "reload" %>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

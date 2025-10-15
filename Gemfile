@@ -23,6 +23,13 @@ gem "mini_magick"
 gem 'dotenv-rails', groups: [:development, :test]
 gem "telegram-bot-ruby"
 
+gem 'activeadmin', '~> 3.3'
+gem 'devise'       # для аутентификации админа
+gem 'sassc-rails'   # для компиляции CSS
+gem 'sprockets-rails'
+
+gem "pg", "~> 1.5"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
