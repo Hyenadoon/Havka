@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_15_170302) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_16_150332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -84,6 +84,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_170302) do
     t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "instructions"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -107,6 +108,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_170302) do
     t.index ["user_id"], name: "index_user_inventories_on_user_id"
   end
 
+  create_table "user_sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.jsonb "state"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_sessions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -121,4 +131,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_170302) do
   add_foreign_key "user_inventories", "product_calibers"
   add_foreign_key "user_inventories", "products"
   add_foreign_key "user_inventories", "users"
+  add_foreign_key "user_sessions", "users"
 end

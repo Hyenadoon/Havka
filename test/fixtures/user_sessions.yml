@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  state: 
+  expires_at: 2025-10-16 18:03:32
+
+two:
+  user: two
+  state: 
+  expires_at: 2025-10-16 18:03:32
