@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get  "vision/new",     to: "vision#new",     as: :new_vision
   post "vision/analyze", to: "vision#analyze", as: :analyze_vision
   post "/telegram/webhook" => "telegram#webhook"
+
+  get 'kitch', to: 'static#kitch_page'
+  get 'kitch_sections', to: 'static#kitch_sections'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

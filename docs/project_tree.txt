@@ -1,0 +1,284 @@
+.
+├── .dockerignore
+├── .env
+├── .gitattributes
+├── .github
+│   ├── dependabot.yml
+│   └── workflows
+│       └── ci.yml
+├── .gitignore
+├── .kamal
+│   ├── hooks
+│   │   ├── docker-setup.sample
+│   │   ├── post-app-boot.sample
+│   │   ├── post-deploy.sample
+│   │   ├── post-proxy-reboot.sample
+│   │   ├── pre-app-boot.sample
+│   │   ├── pre-build.sample
+│   │   ├── pre-connect.sample
+│   │   ├── pre-deploy.sample
+│   │   └── pre-proxy-reboot.sample
+│   └── secrets
+├── .rubocop.yml
+├── .ruby-version
+├── Dockerfile
+├── Gemfile
+├── Gemfile.lock
+├── LICENSE
+├── README.md
+├── Rakefile
+├── app
+│   ├── admin
+│   │   ├── admin_users.rb
+│   │   ├── dashboard.rb
+│   │   ├── product_calibers.rb
+│   │   ├── products.rb
+│   │   ├── recipe_ingredients.rb
+│   │   ├── recipes.rb
+│   │   ├── user_inventories.rb
+│   │   ├── user_session.rb
+│   │   └── users.rb
+│   ├── assets
+│   │   ├── config
+│   │   │   └── manifest.js
+│   │   ├── images
+│   │   │   └── .keep
+│   │   ├── javascripts
+│   │   │   ├── active_admin.js
+│   │   │   └── controllers
+│   │   │       └── application.js
+│   │   └── stylesheets
+│   │       ├── active_admin.scss
+│   │       └── application.css
+│   ├── controllers
+│   │   ├── application_controller.rb
+│   │   ├── concerns
+│   │   │   └── .keep
+│   │   ├── tasks_controller.rb
+│   │   ├── telegram_controller.rb
+│   │   └── vision_controller.rb
+│   ├── helpers
+│   │   ├── application_helper.rb
+│   │   └── tasks_helper.rb
+│   ├── javascript
+│   │   ├── application.js
+│   │   └── controllers
+│   │       ├── application.js
+│   │       ├── hello_controller.js
+│   │       ├── index.js
+│   │       └── scan_controller.js
+│   ├── jobs
+│   │   └── application_job.rb
+│   ├── mailers
+│   │   └── application_mailer.rb
+│   ├── models
+│   │   ├── admin_user.rb
+│   │   ├── application_record.rb
+│   │   ├── concerns
+│   │   │   └── .keep
+│   │   ├── product.rb
+│   │   ├── product_caliber.rb
+│   │   ├── recipe.rb
+│   │   ├── recipe_ingredient.rb
+│   │   ├── scan_item.rb
+│   │   ├── user.rb
+│   │   ├── user_inventory.rb
+│   │   └── user_session.rb
+│   ├── services
+│   │   ├── food_analyzer_service.rb
+│   │   ├── image_uploader_service.rb
+│   │   └── recipe_recommender_service.rb
+│   └── views
+│       ├── layouts
+│       │   ├── active_admin.html.erb
+│       │   ├── application.html.erb
+│       │   ├── mailer.html.erb
+│       │   └── mailer.text.erb
+│       ├── pwa
+│       │   ├── manifest.json.erb
+│       │   └── service-worker.js
+│       ├── tasks
+│       │   ├── edit.html.erb
+│       │   ├── index.html.erb
+│       │   ├── new.html.erb
+│       │   └── show.html.erb
+│       └── vision
+│           ├── _results.erb
+│           ├── _scan_item.html.erb
+│           └── new.html.erb
+├── bin
+│   ├── brakeman
+│   ├── dev
+│   ├── docker-entrypoint
+│   ├── importmap
+│   ├── jobs
+│   ├── kamal
+│   ├── rails
+│   ├── rake
+│   ├── rubocop
+│   ├── setup
+│   └── thrust
+├── config
+│   ├── application.rb
+│   ├── boot.rb
+│   ├── cable.yml
+│   ├── cache.yml
+│   ├── credentials.yml.enc
+│   ├── database.yml
+│   ├── deploy.yml
+│   ├── environment.rb
+│   ├── environments
+│   │   ├── development.rb
+│   │   ├── production.rb
+│   │   └── test.rb
+│   ├── importmap.rb
+│   ├── initializers
+│   │   ├── active_admin.rb
+│   │   ├── assets.rb
+│   │   ├── content_security_policy.rb
+│   │   ├── devise.rb
+│   │   ├── filter_parameter_logging.rb
+│   │   └── inflections.rb
+│   ├── locales
+│   │   ├── devise.en.yml
+│   │   └── en.yml
+│   ├── master.key
+│   ├── prompts
+│   │   └── food_analyzer_prompt.rb
+│   ├── puma.rb
+│   ├── queue.yml
+│   ├── recurring.yml
+│   ├── routes.rb
+│   └── storage.yml
+├── config.ru
+├── db
+│   ├── cable_schema.rb
+│   ├── cache_schema.rb
+│   ├── migrate
+│   │   ├── 20250910215357_create_tasks.rb
+│   │   ├── 20251015164809_create_users.rb
+│   │   ├── 20251015164829_create_products.rb
+│   │   ├── 20251015164859_create_product_calibers.rb
+│   │   ├── 20251015164913_create_recipes.rb
+│   │   ├── 20251015164950_create_recipe_ingredients.rb
+│   │   ├── 20251015165002_create_user_inventories.rb
+│   │   ├── 20251015170301_devise_create_admin_users.rb
+│   │   ├── 20251015170302_create_active_admin_comments.rb
+│   │   ├── 20251016150303_add_instructions_to_recipes.rb
+│   │   └── 20251016150332_create_user_sessions.rb
+│   ├── queue_schema.rb
+│   ├── schema.rb
+│   ├── seeds
+│   └── seeds.rb
+├── docs
+│   └── project_tree.txt
+├── fridge.jpg
+├── lib
+│   └── tasks
+│       └── .keep
+├── project_tree.txt
+├── public
+│   ├── 400.html
+│   ├── 404.html
+│   ├── 406-unsupported-browser.html
+│   ├── 422.html
+│   ├── 500.html
+│   ├── assets
+│   │   ├── .sprockets-manifest-79d6a1f906b9b68b70454f64f36c0a31.json
+│   │   ├── actioncable-323d156a10054ee2c94ba8a17c20458f542a17234f934ea53d16e0e1899fda5e.js
+│   │   ├── actioncable-323d156a10054ee2c94ba8a17c20458f542a17234f934ea53d16e0e1899fda5e.js.gz
+│   │   ├── actioncable.esm-b66d83871f0a453b10ba8b4c147c2bafa655caaa5d13fa34e9bf361c1c2aedb7.js
+│   │   ├── actioncable.esm-b66d83871f0a453b10ba8b4c147c2bafa655caaa5d13fa34e9bf361c1c2aedb7.js.gz
+│   │   ├── actiontext-0bc07717019da448e4a7abda9b2718ef0a4a8399bc1949280d76e308a795be6e.js
+│   │   ├── actiontext-0bc07717019da448e4a7abda9b2718ef0a4a8399bc1949280d76e308a795be6e.js.gz
+│   │   ├── actiontext.esm-8386a561a026b3cbe8b226bf99965ba3e0d76c7ac6c97ef80a5dfec240795708.js
+│   │   ├── actiontext.esm-8386a561a026b3cbe8b226bf99965ba3e0d76c7ac6c97ef80a5dfec240795708.js.gz
+│   │   ├── active_admin-2b46448a6df6dd748415a5a14b86431181801b7f841dd635dd439026fdbafe4d.scss
+│   │   ├── active_admin-2b46448a6df6dd748415a5a14b86431181801b7f841dd635dd439026fdbafe4d.scss.gz
+│   │   ├── active_admin-300e0a48f3c4474108af5afc10ff5c66dd393ae499a29f6cc2d93412f9b8f800.css
+│   │   ├── active_admin-300e0a48f3c4474108af5afc10ff5c66dd393ae499a29f6cc2d93412f9b8f800.css.gz
+│   │   ├── active_admin-752399317ef4825779fd528b8fc323d8cc6ba26dd93bd31194ec40971fffeccf.js
+│   │   ├── active_admin-752399317ef4825779fd528b8fc323d8cc6ba26dd93bd31194ec40971fffeccf.js.gz
+│   │   ├── activestorage-b739665c00c484e89aa1fbed0f6c6956e04e31da358a7661a16fea46775b3cc2.js
+│   │   ├── activestorage-b739665c00c484e89aa1fbed0f6c6956e04e31da358a7661a16fea46775b3cc2.js.gz
+│   │   ├── activestorage.esm-67701f2a2743709337889a5447ee87325b56054627c1b736725d69f247f79992.js
+│   │   ├── activestorage.esm-67701f2a2743709337889a5447ee87325b56054627c1b736725d69f247f79992.js.gz
+│   │   ├── application-37f365cbecf1fa2810a8303f4b6571676fa1f9c56c248528bc14ddb857531b95.js
+│   │   ├── application-37f365cbecf1fa2810a8303f4b6571676fa1f9c56c248528bc14ddb857531b95.js.gz
+│   │   ├── controllers
+│   │   │   ├── application-368d98631bccbf2349e0d4f8269afb3fe9625118341966de054759d96ea86c7e.js
+│   │   │   ├── application-368d98631bccbf2349e0d4f8269afb3fe9625118341966de054759d96ea86c7e.js.gz
+│   │   │   ├── hello_controller-549135e8e7c683a538c3d6d517339ba470fcfb79d62f738a0a089ba41851a554.js
+│   │   │   ├── hello_controller-549135e8e7c683a538c3d6d517339ba470fcfb79d62f738a0a089ba41851a554.js.gz
+│   │   │   ├── index-31a9bee606cbc5cdb1593881f388bbf4c345bf693ea24e124f84b6d5c98ab648.js
+│   │   │   ├── index-31a9bee606cbc5cdb1593881f388bbf4c345bf693ea24e124f84b6d5c98ab648.js.gz
+│   │   │   ├── scan_controller-e580019f90a6dca600806942d8c478ab17383af08b2129c41c8ce214ef0a26ef.js
+│   │   │   └── scan_controller-e580019f90a6dca600806942d8c478ab17383af08b2129c41c8ce214ef0a26ef.js.gz
+│   │   ├── manifest-90aab26ade71e747f745b1227b433fd7d580a54f279ee2be6e1a67bb326bf03a.js
+│   │   ├── manifest-90aab26ade71e747f745b1227b433fd7d580a54f279ee2be6e1a67bb326bf03a.js.gz
+│   │   ├── stimulus-autoloader-c584942b568ba74879da31c7c3d51366737bacaf6fbae659383c0a5653685693.js
+│   │   ├── stimulus-autoloader-c584942b568ba74879da31c7c3d51366737bacaf6fbae659383c0a5653685693.js.gz
+│   │   ├── stimulus-f75215805563870a61ee9dc5a207ce46d4675c7e667558a54344fd1e7baa697f.js
+│   │   ├── stimulus-f75215805563870a61ee9dc5a207ce46d4675c7e667558a54344fd1e7baa697f.js.gz
+│   │   ├── stimulus-importmap-autoloader-db2076c783bf2dbee1226e2add52fef290b5d31b5bcd1edd999ac8a6dd31c44a.js
+│   │   ├── stimulus-importmap-autoloader-db2076c783bf2dbee1226e2add52fef290b5d31b5bcd1edd999ac8a6dd31c44a.js.gz
+│   │   ├── stimulus-loading-3576ce92b149ad5d6959438c6f291e2426c86df3b874c525b30faad51b0d96b3.js
+│   │   ├── stimulus-loading-3576ce92b149ad5d6959438c6f291e2426c86df3b874c525b30faad51b0d96b3.js.gz
+│   │   ├── stimulus.min-dd364f16ec9504dfb72672295637a1c8838773b01c0b441bd41008124c407894.js
+│   │   ├── stimulus.min-dd364f16ec9504dfb72672295637a1c8838773b01c0b441bd41008124c407894.js.gz
+│   │   ├── stimulus.min.js-2cc63625fa177963b45da974806e7aee846cbf1d4930815733d0fdf3fb232325.map
+│   │   ├── stimulus.min.js-2cc63625fa177963b45da974806e7aee846cbf1d4930815733d0fdf3fb232325.map.gz
+│   │   ├── trix-27b67936197943926cb14d19903e2a81f4ed2cb745aec0e8f198e70ddf292774.css
+│   │   ├── trix-27b67936197943926cb14d19903e2a81f4ed2cb745aec0e8f198e70ddf292774.css.gz
+│   │   ├── trix-7440030d033208cfbb65a8d2bb8ad8908099faa351e0cd3bcf9dc24b510c3a91.js
+│   │   ├── trix-7440030d033208cfbb65a8d2bb8ad8908099faa351e0cd3bcf9dc24b510c3a91.js.gz
+│   │   ├── turbo-c69e22a49dcb166659137ec1b5c5feddd68aaa75b2095acf4d013b1084c38d9b.js
+│   │   ├── turbo-c69e22a49dcb166659137ec1b5c5feddd68aaa75b2095acf4d013b1084c38d9b.js.gz
+│   │   ├── turbo.min-38d030897e3554a265d3a3b6bdf4fb7509b08197ba2b6e3761683c07e776c1bc.js
+│   │   ├── turbo.min-38d030897e3554a265d3a3b6bdf4fb7509b08197ba2b6e3761683c07e776c1bc.js.gz
+│   │   ├── turbo.min.js-c24bd7b6c8385de986e1594010354afea50ec32ff67eacee1ac1150f2ed08f8f.map
+│   │   └── turbo.min.js-c24bd7b6c8385de986e1594010354afea50ec32ff67eacee1ac1150f2ed08f8f.map.gz
+│   ├── icon.png
+│   ├── icon.svg
+│   └── robots.txt
+├── script
+│   └── .keep
+└── test
+    ├── application_system_test_case.rb
+    ├── controllers
+    │   ├── .keep
+    │   └── tasks_controller_test.rb
+    ├── fixtures
+    │   ├── admin_users.yml
+    │   ├── files
+    │   │   └── .keep
+    │   ├── product_calibers.yml
+    │   ├── products.yml
+    │   ├── recipe_ingredients.yml
+    │   ├── recipes.yml
+    │   ├── tasks.yml
+    │   ├── user_inventories.yml
+    │   ├── user_sessions.yml
+    │   └── users.yml
+    ├── helpers
+    │   └── .keep
+    ├── integration
+    │   └── .keep
+    ├── mailers
+    │   └── .keep
+    ├── models
+    │   ├── .keep
+    │   ├── admin_user_test.rb
+    │   ├── product_caliber_test.rb
+    │   ├── product_test.rb
+    │   ├── recipe_ingredient_test.rb
+    │   ├── recipe_test.rb
+    │   ├── task_test.rb
+    │   ├── user_inventory_test.rb
+    │   ├── user_session_test.rb
+    │   └── user_test.rb
+    ├── system
+    │   └── .keep
+    └── test_helper.rb
+
+53 directories, 229 files
