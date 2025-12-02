@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Китч - Главная</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial, sans-serif;
+        background: #FFF7EC;
+        color: #312822;
+      }
+
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 16px 32px 80px;
+      }
+
+      /* HEADER */
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0 24px;
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: 0.08em;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        justify-content: center;
+      }
+
+      .nav-item {
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+        background: #FFF3E3;
+        cursor: pointer;
+      }
+
+      .nav-item.active {
+        background: #FFB991;
+        color: #5B2A14;
+      }
+
+      .nav-item.icon-left {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .nav-icon {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        background: #312822;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .ghost-pill {
+        font-size: 12px;
+        opacity: 0.6;
+      }
+
+      .btn-primary {
+        padding: 8px 18px;
+        border-radius: 999px;
+        font-size: 13px;
+        background: #FFE4C8;
+        border: 1px solid #F7D2AB;
+        cursor: pointer;
+      }
+
+      /* SEARCH + TITLE */
+
+      .page-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 12px 0 14px;
+      }
+
+      .search-wrapper {
+        max-width: 420px;
+        position: relative;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 10px 14px 10px 34px;
+        border-radius: 999px;
+        border: none;
+        background: #FFF3E3;
+        font-size: 13px;
+        outline: none;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid #C9BFB0;
+      }
+
+      .search-icon::after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 2px;
+        background: #C9BFB0;
+        border-radius: 999px;
+        right: -4px;
+        bottom: -2px;
+        transform: rotate(35deg);
+      }
+
+      /* SECTION HEADLINE */
+
+      .section-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 26px 0 10px;
+      }
+
+      /* COLLECTIONS */
+
+      .collections {
+        display: flex;
+        gap: 12px;
+        overflow: hidden;
+        margin-bottom: 26px;
+      }
+
+      .collection-card {
+        flex: 0 0 220px;
+        height: 130px;
+        border-radius: 16px;
+        background: #FF6C36;
+        color: #FFF;
+        padding: 14px 14px 10px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .collection-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .collection-sub {
+        font-size: 11px;
+        opacity: 0.8;
+      }
+
+      .collection-image {
+        position: absolute;
+        right: 8px;
+        bottom: 6px;
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        background: #FFE5CA;
+      }
+
+      /* POPULAR SMALL ICONS */
+
+      .popular-icons-row {
+        display: flex;
+        gap: 22px;
+        margin-top: 10px;
+      }
+
+      .popular-icon-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 11px;
+      }
+
+      .circle-thumb {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #F2D9BC;
+        margin-bottom: 4px;
+      }
+
+      /* MEAL FILTERS */
+
+      .filters-row {
+        display: flex;
+        gap: 6px;
+        margin-top: 10px;
+        margin-bottom: 12px;
+      }
+
+      .filter-pill {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 11px;
+        background: #F9E8D3;
+        cursor: pointer;
+      }
+
+      .filter-pill.active {
+        background: #312822;
+        color: #FFF7EC;
+      }
+
+      /* RECIPE GRID */
+
+      .recipes-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px 22px;
+        margin-top: 10px;
+      }
+
+      .recipe-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 20px;
+        background: #FFF1DD;
+      }
+
+      .recipe-thumb-large {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: #F2D9BC;
+        flex-shrink: 0;
+      }
+
+      .recipe-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .recipe-title {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .recipe-price {
+        font-size: 12px;
+        color: #FF5C39;
+      }
+
+      .recipe-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 2px;
+      }
+
+      .meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        opacity: 0.7;
+      }
+
+      .meta-icon-circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1px solid #CBBFAE;
+      }
+
+      /* LOAD MORE */
+
+      .load-more-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 26px;
+      }
+
+      .load-more-btn {
+        padding: 10px 26px;
+        border-radius: 999px;
+        font-size: 13px;
+        background: #F9E8D3;
+        border: none;
+        cursor: pointer;
+      }
+
+      @media (max-width: 900px) {
+        .page {
+          padding-inline: 16px;
+        }
+        .collections {
+          overflow-x: auto;
+        }
+        .recipes-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .nav {
+          justify-content: flex-start;
+        }
+        .recipes-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="logo">КИТЧ</div>
+
+        <nav class="nav">
+          <div class="nav-item icon-left">
+            <div class="nav-icon"></div>
+            <span>Подобрать рецепт</span>
+          </div>
+          <div class="nav-item active">Главная</div>
+          <div class="nav-item icon-left">
+            <div class="nav-icon"></div>
+            <span>Планёр</span>
+          </div>
+        </nav>
+
+        <div class="header-right">
+          <div class="ghost-pill"></div>
+          <button class="btn-primary">Создать аккаунт</button>
+        </div>
+      </header>
+
+      <h1 class="page-title">Самое вкусное уже здесь</h1>
+
+      <div class="search-wrapper">
+        <div class="search-icon"></div>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Блюдо, ингредиент или настроение"
+        >
+      </div>
+
+      <section>
+        <div class="section-title">Подборки</div>
+        <div class="collections">
+          <div class="collection-card">
+            <div class="collection-title">С картошкой</div>
+            <div class="collection-sub">4 рецепта</div>
+            <div class="collection-image"></div>
+          </div>
+
+          <div class="collection-card">
+            <div class="collection-title">С макаронами</div>
+            <div class="collection-sub">15 рецептов</div>
+            <div class="collection-image"></div>
+          </div>
+
+          <div class="collection-card">
+            <div class="collection-title">До 5 минут</div>
+            <div class="collection-sub">5 рецептов</div>
+            <div class="collection-image"></div>
+          </div>
+
+          <div class="collection-card">
+            <div class="collection-title">Много сыра</div>
+            <div class="collection-sub">5 рецептов</div>
+            <div class="collection-image"></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Чаще всего готовят</div>
+
+        <div class="popular-icons-row">
+          <% 5.times do %>
+            <div class="popular-icon-card">
+              <div class="circle-thumb"></div>
+              <span>Суп-пюре с грибами</span>
+            </div>
+          <% end %>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Прием пищи</div>
+        <div class="filters-row">
+          <div class="filter-pill">Завтрак</div>
+          <div class="filter-pill active">Обед</div>
+          <div class="filter-pill">Полдник</div>
+          <div class="filter-pill">Ужин</div>
+        </div>
+
+        <div class="recipes-grid">
+          <% 6.times do %>
+            <article class="recipe-card">
+              <div class="recipe-thumb-large"></div>
+              <div class="recipe-content">
+                <div class="recipe-title">Суп-пюре с грибами</div>
+                <div class="recipe-price">~150р</div>
+                <div class="recipe-meta">
+                  <div class="meta-item">
+                    <span class="meta-icon-circle"></span>
+                    <span>15 мин</span>
+                  </div>
+                  <div class="meta-item">
+                    <span>4 порции</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          <% end %>
+        </div>
+
+        <div class="load-more-wrapper">
+          <button class="load-more-btn">Показать ещё 5</button>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

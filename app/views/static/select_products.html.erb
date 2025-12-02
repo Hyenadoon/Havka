@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Китч - Подобрать рецепт</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial, sans-serif;
+        background: #FFF7EC;
+        color: #312822;
+      }
+
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 16px 32px 80px;
+      }
+
+      /* HEADER - такой же как на главной */
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0 36px;
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: 0.08em;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        justify-content: center;
+      }
+
+      .nav-item {
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+        background: #FFF3E3;
+        cursor: pointer;
+      }
+
+      .nav-item.active {
+        background: #FFB991;
+        color: #5B2A14;
+      }
+
+      .nav-item.icon-left {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .nav-icon {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        background: #312822;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .ghost-pill {
+        font-size: 12px;
+        opacity: 0.6;
+      }
+
+      .btn-primary {
+        padding: 8px 18px;
+        border-radius: 999px;
+        font-size: 13px;
+        background: #FFE4C8;
+        border: 1px solid #F7D2AB;
+        cursor: pointer;
+      }
+
+      /* TITLE */
+
+      .center-title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 36px;
+      }
+
+      /* OPTIONS BLOCKS */
+
+      .options-row {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        align-items: stretch;
+      }
+
+      .option-card {
+        flex: 1 1 0;
+        max-width: 460px;
+        height: 280px;
+        border-radius: 32px;
+        background: #F8EBDD;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .option-card.secondary {
+        background: #FFE3D1;
+      }
+
+      .option-inner {
+        max-width: 220px;
+      }
+
+      .option-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        margin: 0 auto 10px;
+        background: #312822;
+        position: relative;
+      }
+
+      .option-icon::before {
+        content: "";
+        position: absolute;
+        inset: 5px;
+        border: 2px solid #FFF7EC;
+        border-radius: 4px;
+      }
+
+      .option-icon.camera::before {
+        border-radius: 50%;
+      }
+
+      .option-title {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .option-time {
+        font-size: 12px;
+        opacity: 0.65;
+      }
+
+      @media (max-width: 900px) {
+        .page {
+          padding-inline: 16px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .nav {
+          justify-content: flex-start;
+        }
+        .options-row {
+          flex-direction: column;
+        }
+        .option-card {
+          max-width: none;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="logo">КИТЧ</div>
+
+        <nav class="nav">
+          <div class="nav-item icon-left active">
+            <div class="nav-icon"></div>
+            <span>Подобрать рецепт</span>
+          </div>
+          <div class="nav-item">Главная</div>
+          <div class="nav-item icon-left">
+            <div class="nav-icon"></div>
+            <span>Планёр</span>
+          </div>
+        </nav>
+
+        <div class="header-right">
+          <div class="ghost-pill"></div>
+          <button class="btn-primary">Создать аккаунт</button>
+        </div>
+      </header>
+
+      <h1 class="center-title">Что у вас есть из продуктов?</h1>
+
+      <section class="options-row">
+        <div class="option-card">
+          <div class="option-inner">
+            <div class="option-icon"></div>
+            <div class="option-title">Ввести продукты вручную</div>
+            <div class="option-time">~ 5 мин</div>
+          </div>
+        </div>
+
+        <div class="option-card secondary">
+          <div class="option-inner">
+            <div class="option-icon camera"></div>
+            <div class="option-title">Распознать продукты по фото</div>
+            <div class="option-time">&lt; 2 мин</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
