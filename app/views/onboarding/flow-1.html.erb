@@ -1,0 +1,296 @@
+<%# app/views/onboarding/flow_1.html.erb %>
+<%# Flow 1 (Figma node: 137:1653). One file: HTML+CSS+JS. %>
+
+<%
+  img_logo = "https://www.figma.com/api/mcp/asset/552f06ac-67f6-4d98-8d3a-641381587557"
+  img_bars = "https://www.figma.com/api/mcp/asset/c1ec28f1-d038-4291-bae8-65bc7f89ca32"
+%>
+
+<div class="k-flow k-flow1">
+  <style>
+    :root{
+      --bg-secondary:#f9f3ea;
+      --bg-primary:#fff9f0;
+      --bg-input:#f4ede4;
+
+      --text-900:#25211b;
+      --text-800:#46413b;
+      --text-800-61: rgba(41,35,24,0.61);
+      --text-muted: rgba(41,35,24,0.22);
+
+      --line-300:#e5dfd6;
+      --line-soft: rgba(41,35,24,0.07);
+
+      --btn-neutral-bg: rgba(41,35,24,0.05);
+      --btn-neutral-text:#46413b;
+
+      --accent:#ff5d34;
+      --accent-soft: rgba(255,93,52,0.12);
+      --accent-soft2: rgba(255,93,52,0.06);
+
+      --tag-bg: rgba(41,35,24,0.05);
+      --tag-text: rgba(41,35,24,0.5);
+
+      --r-sm: 8px;
+      --r: 16px;
+      --r-md: 24px;
+      --r-lg: 32px;
+      --r-pill: 120px;
+
+      --max: 840px;
+      --pad: 16px;
+      --blur: 21px;
+
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{ margin:0; background: var(--bg-secondary); color: var(--text-900); font-family: var(--font); }
+    a{ text-decoration:none; color:inherit; }
+
+    .k-flow{ min-height:100vh; display:flex; flex-direction:column; }
+    .k-flow__nav{
+      position: sticky; top:0; z-index:50;
+      display:flex; flex-direction:column; width:100%;
+      background: var(--bg-primary);
+      border-bottom:1px solid var(--line-300);
+    }
+    .k-flow__nav-top{
+      padding: 8px var(--pad);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .k-flow__logo{ height:21px; width:153px; display:block; }
+    .k-iconbtn{
+      width:40px; height:40px; border-radius: var(--r);
+      border:0; background: var(--btn-neutral-bg);
+      backdrop-filter: blur(var(--blur));
+      display:grid; place-items:center;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .k-iconbtn:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+    .k-iconbtn:active{ transform: translateY(0) scale(.98); }
+    .k-iconbtn img{ width:20px; height:20px; display:block; }
+
+    .k-flow__layout{
+      width:100%;
+      padding: 24px var(--pad) 120px;
+      display:flex;
+      justify-content:center;
+    }
+    .k-flow__content{
+      width:100%;
+      max-width: var(--max);
+      display:flex;
+      flex-direction:column;
+      gap: 24px;
+    }
+
+    .k-h1{
+      margin:0;
+      font-size: 23px;
+      line-height: 1.3;
+      letter-spacing: -0.576px;
+      color: #514242;
+      font-weight: 600;
+    }
+    .k-label{
+      margin:0;
+      font-size:16px;
+      line-height:1.5;
+      letter-spacing:-0.16px;
+      font-weight:600;
+      color: var(--text-800-61);
+    }
+
+    .k-chips{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding: 8px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .k-chips::-webkit-scrollbar{ height:10px; }
+    .k-chips::-webkit-scrollbar-thumb{ background: rgba(41,35,24,0.12); border-radius:999px; }
+
+    .k-chip{
+      border:0;
+      background: var(--btn-neutral-bg);
+      color: var(--text-800);
+      padding: 8px 16px;
+      border-radius: var(--r-pill);
+      font-size:16px;
+      letter-spacing:-0.16px;
+      font-weight:600;
+      cursor:pointer;
+      white-space:nowrap;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .k-chip:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+    .k-chip:active{ transform: translateY(0) scale(.99); }
+    .k-chip[aria-selected="true"]{
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .k-input{
+      background: var(--bg-input);
+      border-radius: var(--r-sm);
+      padding: 12px 16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .k-input__big{
+      font-size: 48px;
+      line-height: 1.2;
+      letter-spacing: -1.4334px;
+      font-weight: 600;
+      color: var(--text-800);
+      width:100%;
+      border:0;
+      background:transparent;
+      outline:none;
+    }
+
+    .k-bottom{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      background: rgba(255,249,240,0.92);
+      backdrop-filter: blur(var(--blur));
+      border-top: 1px solid var(--line-300);
+      z-index:60;
+    }
+    .k-bottom__inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 16px var(--pad);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .k-btn{
+      border:0;
+      border-radius: var(--r);
+      padding: 16px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-weight:700;
+      letter-spacing:-0.16px;
+      transition: transform .12s ease, filter .12s ease;
+      user-select:none;
+    }
+    .k-btn:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+    .k-btn:active{ transform: translateY(0) scale(.99); }
+
+    .k-btn--dark{ background: #25211b; color: #fff9f0; }
+    .k-btn--accent{ background: var(--accent); color:#f1f1f1; }
+
+    .k-progress{
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      min-width: 92px;
+    }
+    .k-progress__ring{
+      width:24px; height:24px; border-radius:999px;
+      background:
+        conic-gradient(var(--accent) 0 72deg, #e5dfd6 72deg 360deg);
+      position:relative;
+    }
+    .k-progress__ring::after{
+      content:"";
+      position:absolute; inset:3px;
+      background: rgba(255,249,240,0.95);
+      border-radius:999px;
+    }
+    .k-progress__txt{
+      font-size:16px;
+      line-height:1.5;
+      letter-spacing:-0.16px;
+      font-weight:600;
+      color: rgba(41,35,24,0.5);
+      margin:0;
+      white-space:nowrap;
+    }
+
+    .k-ico{ width:24px; height:24px; display:block; }
+
+    @media (max-width: 720px){
+      .k-flow__layout{ padding-bottom: 140px; }
+      .k-progress{ min-width: 84px; }
+      .k-input__big{ font-size: 44px; }
+    }
+  </style>
+
+  <header class="k-flow__nav" role="banner">
+    <div class="k-flow__nav-top">
+      <img class="k-flow__logo" src="<%= img_logo %>" alt="Солянка" />
+      <button class="k-iconbtn" type="button" aria-label="Меню">
+        <img src="<%= img_bars %>" alt="" />
+      </button>
+    </div>
+  </header>
+
+  <main class="k-flow__layout" role="main">
+    <div class="k-flow__content">
+      <h1 class="k-h1">По каким параметрам подбираем?</h1>
+
+      <section>
+        <p class="k-label">Длительность</p>
+        <div class="k-chips" role="listbox" aria-label="Длительность">
+          <% %w[День Неделя 2\ недели Месяц].each_with_index do |t,i| %>
+            <button class="k-chip" type="button" role="option" aria-selected="<%= i==0 %>" data-chip>
+              <%= t %>
+            </button>
+          <% end %>
+        </div>
+      </section>
+
+      <section>
+        <p class="k-label">Бюджет</p>
+        <div class="k-input" role="group" aria-label="Бюджет">
+          <input class="k-input__big" type="text" value="350 ₽" inputmode="numeric" />
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="k-bottom" role="contentinfo">
+    <div class="k-bottom__inner">
+      <button class="k-btn k-btn--dark" type="button" aria-label="Назад">
+        <svg class="k-ico" viewBox="0 0 24 24" fill="none">
+          <path d="M11 6L5 12l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="k-progress" aria-label="Прогресс">
+        <div class="k-progress__ring" style="background: conic-gradient(var(--accent) 0 72deg, #e5dfd6 72deg 360deg);"></div>
+        <p class="k-progress__txt">1/3 шагов</p>
+      </div>
+
+      <a class="k-btn k-btn--accent" href="#" aria-label="Дальше">
+        <svg class="k-ico" viewBox="0 0 24 24" fill="none">
+          <path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // мини-логика чипов (как в мобилке)
+    (function(){
+      const chips = Array.from(document.querySelectorAll('[data-chip]'));
+      chips.forEach(btn => {
+        btn.addEventListener('click', () => {
+          chips.forEach(b => b.setAttribute('aria-selected', 'false'));
+          btn.setAttribute('aria-selected', 'true');
+        });
+      });
+    })();
+  </script>
+</div>

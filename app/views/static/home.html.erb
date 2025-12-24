@@ -1,449 +1,649 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Китч - Главная</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial, sans-serif;
-        background: #FFF7EC;
-        color: #312822;
-      }
+<%# app/views/home/index.html.erb %>
+<%# Home (Figma node: 96:1103). One file: HTML+CSS+JS. %>
 
-      .page {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 16px 32px 80px;
-      }
+<%
+  # Assets (из Figma MCP)
+  img_recipe = "https://www.figma.com/api/mcp/asset/f32597ea-dcdc-4730-ab4e-1e87897f7ddb"
+  img_collection = "https://www.figma.com/api/mcp/asset/1b6e1a13-81b8-4ee1-a1b5-4325f37bf023"
+  img_logo = "https://www.figma.com/api/mcp/asset/552f06ac-67f6-4d98-8d3a-641381587557"
+  img_bars = "https://www.figma.com/api/mcp/asset/c1ec28f1-d038-4291-bae8-65bc7f89ca32"
+  img_icon_board = "https://www.figma.com/api/mcp/asset/ff9dffc7-b770-484a-a022-9cf60d701728"
+  img_icon_main = "https://www.figma.com/api/mcp/asset/9e096cfb-676c-4d7f-ba5f-6ced3f81a1f7"
+  img_icon_planner = "https://www.figma.com/api/mcp/asset/b695b02b-93c6-4412-bcc3-74d83c9364c9"
+  img_icon_search = "https://www.figma.com/api/mcp/asset/ec060d25-fcd5-4c6c-bfec-26b2a3dd66b3"
 
-      /* HEADER */
+  user_name = (defined?(current_user) && current_user&.respond_to?(:name) ? current_user.name : nil)
 
-      .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 8px 0 24px;
-      }
+  collections = [
+    { title_html: "<span class='k-home__em'>C макаронами</span>", count: "15 рецептов" },
+    { title_html: "<span class='k-home__em'>C курицей</span>", count: "12 рецептов" }
+  ]
 
-      .logo {
-        font-weight: 800;
-        font-size: 20px;
-        letter-spacing: 0.08em;
-      }
+  popular = Array.new(5) { { title: "Суп-пюре с грибами", img: img_recipe } }
 
-      .nav {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex: 1;
-        justify-content: center;
-      }
+  # Сортировка по приему пищи (демо)
+  meals = %w[Завтрак Обед Полдник Ужин]
 
-      .nav-item {
-        padding: 8px 16px;
-        border-radius: 999px;
-        font-size: 13px;
-        background: #FFF3E3;
-        cursor: pointer;
-      }
+  # Демо карточки в списке
+  feed = [
+    { title: "Суп-пюре с грибами", price: "~ 150р", time: "15 мин", portions: "4 порции", img: img_recipe },
+    { title: "Суп-пюре с грибами", price: "~ 150р", time: "15 мин", portions: "4 порции", img: img_recipe }
+  ]
+%>
 
-      .nav-item.active {
-        background: #FFB991;
-        color: #5B2A14;
-      }
+<div class="k-home">
+  <style>
+    :root{
+      --bg-secondary:#f9f3ea;
+      --bg-primary:#fff9f0;
+      --bg-input:#f4ede4;
 
-      .nav-item.icon-left {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
+      --text-900:#25211b;
+      --text-800:#46413b;
+      --text-800-61: rgba(41,35,24,0.61);
+      --text-muted: rgba(41,35,24,0.22);
 
-      .nav-icon {
-        width: 12px;
-        height: 12px;
-        border-radius: 3px;
-        background: #312822;
-      }
+      --line-300:#e5dfd6;
+      --line-soft: rgba(41,35,24,0.07);
 
-      .header-right {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
+      --btn-neutral-bg: rgba(41,35,24,0.05);
+      --btn-neutral-text:#46413b;
 
-      .ghost-pill {
-        font-size: 12px;
-        opacity: 0.6;
-      }
+      --accent:#ff5d34;
+      --btn-accent-bg: rgba(255,93,52,0.12);
 
-      .btn-primary {
-        padding: 8px 18px;
-        border-radius: 999px;
-        font-size: 13px;
-        background: #FFE4C8;
-        border: 1px solid #F7D2AB;
-        cursor: pointer;
-      }
+      --tag-bg: rgba(41,35,24,0.05);
+      --tag-text: rgba(41,35,24,0.5);
 
-      /* SEARCH + TITLE */
+      --r-sm: 8px;
+      --r: 16px;
+      --r-pill: 120px;
 
-      .page-title {
-        font-size: 22px;
-        font-weight: 700;
-        margin: 12px 0 14px;
-      }
+      --max: 840px;
+      --pad: 16px;
+      --blur: 21px;
 
-      .search-wrapper {
-        max-width: 420px;
-        position: relative;
-      }
+      --shadow: 0 18px 50px rgba(0,0,0,.00);
+      --shadow2: 0 10px 24px rgba(0,0,0,.00);
 
-      .search-input {
-        width: 100%;
-        padding: 10px 14px 10px 34px;
-        border-radius: 999px;
-        border: none;
-        background: #FFF3E3;
-        font-size: 13px;
-        outline: none;
-      }
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+    }
+    a {
+       text-decoration: none;
+    }
 
-      .search-icon {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        border: 2px solid #C9BFB0;
-      }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{ margin:0; background: var(--bg-secondary); color: var(--text-900); font-family: var(--font); }
 
-      .search-icon::after {
-        content: "";
-        position: absolute;
-        width: 6px;
-        height: 2px;
-        background: #C9BFB0;
-        border-radius: 999px;
-        right: -4px;
-        bottom: -2px;
-        transform: rotate(35deg);
-      }
+    .k-home{ min-height: 100vh; display:flex; flex-direction:column; }
 
-      /* SECTION HEADLINE */
+    /* sticky navigation (как в фигме) */
+    .k-home__nav{
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display:flex;
+      flex-direction:column;
+      width:100%;
+      overflow:hidden;
+    }
 
-      .section-title {
-        font-size: 14px;
-        font-weight: 600;
-        margin: 26px 0 10px;
-      }
+    .k-home__nav-top{
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--line-300);
+      padding: 8px var(--pad);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
 
-      /* COLLECTIONS */
+    .k-home__logo{
+      height: 21px;
+      width: 153px;
+      display:block;
+    }
 
-      .collections {
-        display: flex;
-        gap: 12px;
-        overflow: hidden;
-        margin-bottom: 26px;
-      }
+    .k-home__iconbtn{
+      width: 40px;
+      height: 40px;
+      border-radius: var(--r);
+      border: 0;
+      background: var(--btn-neutral-bg);
+      backdrop-filter: blur(var(--blur));
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .k-home__iconbtn:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+    .k-home__iconbtn:active{ transform: translateY(0) scale(.98); }
+    .k-home__iconbtn img{ width:20px; height:20px; display:block; }
 
-      .collection-card {
-        flex: 0 0 220px;
-        height: 130px;
-        border-radius: 16px;
-        background: #FF6C36;
-        color: #FFF;
-        padding: 14px 14px 10px;
-        position: relative;
-        cursor: pointer;
-      }
+    .k-home__nav-tabs{
+      background: var(--bg-primary);
+      height: 64px;
+      position:relative;
+    }
 
-      .collection-title {
-        font-size: 16px;
-        font-weight: 700;
-        margin-bottom: 4px;
-      }
+    .k-home__tabs{
+      position:absolute;
+      left: 21px;
+      top: 50%;
+      transform: translateY(-50%);
+      display:flex;
+      gap: 8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
 
-      .collection-sub {
-        font-size: 11px;
-        opacity: 0.8;
-      }
+    .k-home__tab{
+      display:inline-flex;
+      gap: 12px;
+      padding: 12px 24px;
+      border-radius: var(--r);
+      background: var(--btn-neutral-bg);
+      backdrop-filter: blur(var(--blur));
+      color: var(--btn-neutral-text);
+      font-weight: 700;
+      letter-spacing: -0.16px;
+      text-decoration:none;
+      border: 0;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .k-home__tab:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+    .k-home__tab:active{ transform: translateY(0) scale(.99); }
+    .k-home__tab img{ width:24px; height:24px; display:block; }
 
-      .collection-image {
-        position: absolute;
-        right: 8px;
-        bottom: 6px;
-        width: 96px;
-        height: 96px;
-        border-radius: 50%;
-        background: #FFE5CA;
-      }
+    .k-home__tab--active{
+      background: var(--btn-accent-bg);
+      color: var(--accent);
+    }
+    .k-home__tab--active img{ filter: none; }
 
-      /* POPULAR SMALL ICONS */
+    /* layout */
+    .k-home__layout{
+      width:100%;
+      padding: 40px var(--pad);
+      display:flex;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .k-home__content{
+      width:100%;
+      max-width: var(--max);
+      display:flex;
+      flex-direction:column;
+      gap: 40px;
+    }
 
-      .popular-icons-row {
-        display: flex;
-        gap: 22px;
-        margin-top: 10px;
-      }
+    .k-home__h1{
+      margin:0;
+      font-size: 23px;
+      line-height: 1.3;
+      letter-spacing: -0.576px;
+      color: #514242; /* как в фигме */
+      font-weight: 600;
+    }
 
-      .popular-icon-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 11px;
-      }
+    /* search input */
+    .k-home__search{
+      height: 48px;
+      border-radius: var(--r-sm);
+      background: var(--bg-input);
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 16px;
+    }
+    .k-home__search img{ width:24px; height:24px; display:block; opacity:.95; }
+    .k-home__search input{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      font-size: 16px;
+      letter-spacing: -0.16px;
+      color: var(--text-800);
+    }
+    .k-home__search input::placeholder{ color: var(--text-muted); }
 
-      .circle-thumb {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: #F2D9BC;
-        margin-bottom: 4px;
-      }
+    /* blocks titles */
+    .k-home__block-title{
+      margin:0;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -0.16px;
+      font-weight: 600;
+      color: var(--text-800-61);
+    }
 
-      /* MEAL FILTERS */
+    /* Collections */
+    .k-home__collections{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+    }
+    .k-home__collections-row{
+      padding: 8px 0;
+      display:flex;
+      gap: 8px;
+      overflow:auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .k-home__collections-row::-webkit-scrollbar{ height: 10px; }
+    .k-home__collections-row::-webkit-scrollbar-thumb{ background: rgba(41,35,24,0.12); border-radius: 999px; }
 
-      .filters-row {
-        display: flex;
-        gap: 6px;
-        margin-top: 10px;
-        margin-bottom: 12px;
-      }
+    .k-home__collection{
+      width: 299px;
+      min-width: 299px;
+      height: 160px;
+      border-radius: var(--r);
+      border: 2px solid var(--line-soft);
+      position:relative;
+      overflow:hidden;
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      scroll-snap-align: start;
+      box-shadow: var(--shadow2);
+    }
+    .k-home__collection::before{
+      content:"";
+      position:absolute; inset:0;
+      background: var(--bg-primary);
+      z-index:0;
+    }
+    .k-home__collection img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      z-index:1;
+    }
+    .k-home__collection > *{ position:relative; z-index:2; }
+    .k-home__collection-title{
+      margin:0;
+      font-size: 23px;
+      line-height: 1.3;
+      letter-spacing: -0.576px;
+      color: var(--text-900);
+      font-weight: 600;
+    }
+    .k-home__collection-sub{
+      margin:0;
+      font-size: 14.3px;
+      line-height: 1.5;
+      letter-spacing: -0.2145px;
+      color: var(--text-900);
+      font-weight: 600;
+    }
+    .k-home__em{ font-weight: 800; }
 
-      .filter-pill {
-        padding: 6px 14px;
-        border-radius: 999px;
-        font-size: 11px;
-        background: #F9E8D3;
-        cursor: pointer;
-      }
+    /* Popular horizontal recipes */
+    .k-home__popular{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+    }
+    .k-home__popular-row{
+      height: 174px;
+      position:relative;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .k-home__popular-row::-webkit-scrollbar{ height: 10px; }
+    .k-home__popular-row::-webkit-scrollbar-thumb{ background: rgba(41,35,24,0.12); border-radius: 999px; }
 
-      .filter-pill.active {
-        background: #312822;
-        color: #FFF7EC;
-      }
+    .k-home__popular-inner{
+      position:absolute;
+      left:0; top:0;
+      display:flex;
+      gap: 12px;
+      align-items:flex-start;
+      padding-bottom: 8px;
+    }
 
-      /* RECIPE GRID */
+    .k-home__recipe-small{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      width: 124px;
+      min-width: 124px;
+    }
+    .k-home__recipe-small-img{
+      width: 124px;
+      height: 124px;
+      border-radius: var(--r);
+      overflow:hidden;
+      background: #fff9f0;
+      position:relative;
+      box-shadow: var(--shadow2);
+    }
+    .k-home__recipe-small-img img{
+      width:100%; height:100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      display:block;
+    }
+    .k-home__recipe-small-title{
+      margin:0;
+      font-size: 14.3px;
+      line-height: 1.5;
+      letter-spacing: -0.2145px;
+      color: var(--text-800);
+      font-weight: 600;
+    }
 
-      .recipes-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px 22px;
-        margin-top: 10px;
-      }
+    /* Sorting */
+    .k-home__sorting{
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+    }
+    .k-home__filters{
+      padding: 8px 0;
+      display:flex;
+      gap: 8px;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .k-home__filters::-webkit-scrollbar{ height: 10px; }
+    .k-home__filters::-webkit-scrollbar-thumb{ background: rgba(41,35,24,0.12); border-radius: 999px; }
 
-      .recipe-card {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 10px 12px;
-        border-radius: 20px;
-        background: #FFF1DD;
-      }
+    .k-home__filter{
+      border:0;
+      background: rgba(41,35,24,0.05);
+      color: var(--text-800);
+      padding: 8px 16px;
+      border-radius: var(--r-pill);
+      font-size: 16px;
+      letter-spacing: -0.16px;
+      font-weight: 600;
+      cursor:pointer;
+      white-space:nowrap;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .k-home__filter:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+    .k-home__filter:active{ transform: translateY(0) scale(.99); }
+    .k-home__filter[aria-selected="true"]{
+      background: var(--btn-accent-bg);
+      color: var(--accent);
+    }
 
-      .recipe-thumb-large {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background: #F2D9BC;
-        flex-shrink: 0;
-      }
+    /* Medium recipe cards list */
+    .k-home__feed{
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+    }
+    .k-home__recipe-medium{
+      display:flex;
+      gap: 8px;
+      align-items:flex-start;
+      text-decoration:none;
+      color: inherit;
+    }
+    .k-home__recipe-medium-img{
+      width: 164px;
+      min-width: 164px;
+      height: 148px;
+      border-radius: var(--r);
+      overflow:hidden;
+      background: #fff9f0;
+      box-shadow: var(--shadow2);
+      position:relative;
+    }
+    .k-home__recipe-medium-img img{
+      width:100%; height:100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      display:block;
+    }
+    .k-home__recipe-medium-info{
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+      padding-top: 2px;
+    }
+    .k-home__recipe-medium-titlewrap{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+    }
+    .k-home__recipe-medium-title{
+      margin:0;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -0.16px;
+      color: var(--text-800);
+      font-weight: 700;
+    }
+    .k-home__recipe-medium-price{
+      margin:0;
+      height: 24px;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -0.16px;
+      color: var(--accent);
+      font-weight: 700;
+    }
 
-      .recipe-content {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
+    .k-home__tags{
+      display:flex;
+      gap: 4px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .k-home__tag{
+      height: 32px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 4px;
+      padding: 6px 8px;
+      border-radius: 48px;
+      background: var(--tag-bg);
+      backdrop-filter: blur(var(--blur));
+      color: var(--tag-text);
+      font-size: 14.3px;
+      letter-spacing: -0.2145px;
+      font-weight: 600;
+      white-space:nowrap;
+    }
+    .k-home__tag svg, .k-home__tag img{
+      width:20px; height:20px; display:block;
+      opacity:.9;
+    }
 
-      .recipe-title {
-        font-size: 13px;
-        font-weight: 600;
-      }
+    /* Show more */
+    .k-home__more-wrap{
+      display:flex;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .k-home__more{
+      height: 48px;
+      width: 100%;
+      max-width: 300px;
+      border-radius: var(--r);
+      border:0;
+      background: var(--btn-neutral-bg);
+      backdrop-filter: blur(var(--blur));
+      color: var(--text-800);
+      font-size: 16px;
+      letter-spacing: -0.16px;
+      font-weight: 700;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .k-home__more:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+    .k-home__more:active{ transform: translateY(0) scale(.99); }
 
-      .recipe-price {
-        font-size: 12px;
-        color: #FF5C39;
-      }
+    /* Responsive */
+    @media (max-width: 720px){
+      .k-home__tabs{ left: 16px; right: 16px; }
+      .k-home__tab{ padding: 12px 16px; }
+      .k-home__content{ gap: 28px; }
+      .k-home__layout{ padding: 28px 16px; }
+      .k-home__recipe-medium{ flex-direction:column; }
+      .k-home__recipe-medium-img{ width:100%; min-width: 0; height: 180px; }
+    }
+  </style>
 
-      .recipe-meta {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 2px;
-      }
+  <header class="k-home__nav" role="banner">
+    <div class="k-home__nav-top">
+      <img class="k-home__logo" src="<%= img_logo %>" alt="Солянка" />
+      <button class="k-home__iconbtn" type="button" aria-label="Меню">
+        <img src="<%= img_bars %>" alt="" />
+      </button>
+    </div>
 
-      .meta-item {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 11px;
-        opacity: 0.7;
-      }
+    <div class="k-home__nav-tabs">
+      <div class="k-home__tabs" role="navigation" aria-label="Навигация">
+        <%# Подставь свои пути %>
+        <a class="k-home__tab" href="<%= defined?(recipes_path) ? recipes_path : '#' %>">
+          <img src="<%= img_icon_board %>" alt="" />
+          Подобрать рецепт
+        </a>
 
-      .meta-icon-circle {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        border: 1px solid #CBBFAE;
-      }
+        <a class="k-home__tab k-home__tab--active" href="<%= defined?(root_path) ? root_path : '#' %>" aria-current="page">
+          <img src="<%= img_icon_main %>" alt="" />
+          Главная
+        </a>
 
-      /* LOAD MORE */
-
-      .load-more-wrapper {
-        display: flex;
-        justify-content: center;
-        margin-top: 26px;
-      }
-
-      .load-more-btn {
-        padding: 10px 26px;
-        border-radius: 999px;
-        font-size: 13px;
-        background: #F9E8D3;
-        border: none;
-        cursor: pointer;
-      }
-
-      @media (max-width: 900px) {
-        .page {
-          padding-inline: 16px;
-        }
-        .collections {
-          overflow-x: auto;
-        }
-        .recipes-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (max-width: 640px) {
-        .header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-        }
-        .nav {
-          justify-content: flex-start;
-        }
-        .recipes-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <header class="header">
-        <div class="logo">КИТЧ</div>
-
-        <nav class="nav">
-          <div class="nav-item icon-left">
-            <div class="nav-icon"></div>
-            <span>Подобрать рецепт</span>
-          </div>
-          <div class="nav-item active">Главная</div>
-          <div class="nav-item icon-left">
-            <div class="nav-icon"></div>
-            <span>Планёр</span>
-          </div>
-        </nav>
-
-        <div class="header-right">
-          <div class="ghost-pill"></div>
-          <button class="btn-primary">Создать аккаунт</button>
-        </div>
-      </header>
-
-      <h1 class="page-title">Самое вкусное уже здесь</h1>
-
-      <div class="search-wrapper">
-        <div class="search-icon"></div>
-        <input
-          type="text"
-          class="search-input"
-          placeholder="Блюдо, ингредиент или настроение"
-        >
+        <a class="k-home__tab" href="<%= defined?(planner_path) ? planner_path : '#' %>">
+          <img src="<%= img_icon_planner %>" alt="" />
+          Планёр
+        </a>
       </div>
+    </div>
+  </header>
 
-      <section>
-        <div class="section-title">Подборки</div>
-        <div class="collections">
-          <div class="collection-card">
-            <div class="collection-title">С картошкой</div>
-            <div class="collection-sub">4 рецепта</div>
-            <div class="collection-image"></div>
-          </div>
+  <main class="k-home__layout" role="main">
+    <div class="k-home__content">
+      <h1 class="k-home__h1"><%= ("Самое вкусно уже здесь" + (user_name ? ", #{h(user_name)}" : "") + " ").strip %></h1>
 
-          <div class="collection-card">
-            <div class="collection-title">С макаронами</div>
-            <div class="collection-sub">15 рецептов</div>
-            <div class="collection-image"></div>
-          </div>
+      <form class="k-home__search" action="<%= defined?(search_path) ? search_path : '#' %>" method="get" role="search">
+        <img src="<%= img_icon_search %>" alt="" />
+        <input name="q" value="<%= h(params[:q].to_s) %>" placeholder="Болоньезе..." autocomplete="off" />
+      </form>
 
-          <div class="collection-card">
-            <div class="collection-title">До 5 минут</div>
-            <div class="collection-sub">5 рецептов</div>
-            <div class="collection-image"></div>
-          </div>
-
-          <div class="collection-card">
-            <div class="collection-title">Много сыра</div>
-            <div class="collection-sub">5 рецептов</div>
-            <div class="collection-image"></div>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="section-title">Чаще всего готовят</div>
-
-        <div class="popular-icons-row">
-          <% 5.times do %>
-            <div class="popular-icon-card">
-              <div class="circle-thumb"></div>
-              <span>Суп-пюре с грибами</span>
-            </div>
+      <section class="k-home__collections" aria-label="Подборки">
+        <p class="k-home__block-title">Подборки</p>
+        <div class="k-home__collections-row">
+          <% collections.each do |c| %>
+            <a class="k-home__collection" href="<%= defined?(collections_path) ? collections_path : '#' %>">
+              <img src="<%= img_collection %>" alt="" />
+              <p class="k-home__collection-title"><%= c[:title_html].html_safe %></p>
+              <p class="k-home__collection-sub"><%= c[:count] %></p>
+            </a>
           <% end %>
         </div>
       </section>
 
-      <section>
-        <div class="section-title">Прием пищи</div>
-        <div class="filters-row">
-          <div class="filter-pill">Завтрак</div>
-          <div class="filter-pill active">Обед</div>
-          <div class="filter-pill">Полдник</div>
-          <div class="filter-pill">Ужин</div>
+      <section class="k-home__popular" aria-label="Чаще всего готовят">
+        <p class="k-home__block-title">Чаще всего готовят</p>
+        <div class="k-home__popular-row">
+          <div class="k-home__popular-inner">
+            <% popular.each do |r| %>
+              <a class="k-home__recipe-small" href="<%= defined?(recipe_path) ? recipe_path(1) : '#' %>">
+                <div class="k-home__recipe-small-img">
+                  <img src="<%= r[:img] %>" alt="" />
+                </div>
+                <p class="k-home__recipe-small-title"><%= r[:title] %></p>
+              </a>
+            <% end %>
+          </div>
+        </div>
+      </section>
+
+      <section class="k-home__sorting" aria-label="Сортировка рецептов">
+        <div>
+          <p class="k-home__block-title">Прием пищи</p>
+          <div class="k-home__filters" role="tablist" aria-label="Фильтр по приему пищи">
+            <% meals.each_with_index do |m, i| %>
+              <button
+                class="k-home__filter"
+                type="button"
+                role="tab"
+                aria-selected="<%= i == 0 ? "true" : "false" %>"
+                data-meal="<%= m %>"><%= m %></button>
+            <% end %>
+          </div>
         </div>
 
-        <div class="recipes-grid">
-          <% 6.times do %>
-            <article class="recipe-card">
-              <div class="recipe-thumb-large"></div>
-              <div class="recipe-content">
-                <div class="recipe-title">Суп-пюре с грибами</div>
-                <div class="recipe-price">~150р</div>
-                <div class="recipe-meta">
-                  <div class="meta-item">
-                    <span class="meta-icon-circle"></span>
-                    <span>15 мин</span>
-                  </div>
-                  <div class="meta-item">
-                    <span>4 порции</span>
-                  </div>
+        <div class="k-home__feed" id="kHomeFeed">
+          <% feed.each do |r| %>
+            <a class="k-home__recipe-medium" href="<%= defined?(recipe_path) ? recipe_path(1) : '#' %>">
+              <div class="k-home__recipe-medium-img">
+                <img src="<%= r[:img] %>" alt="" />
+              </div>
+
+              <div class="k-home__recipe-medium-info">
+                <div class="k-home__recipe-medium-titlewrap">
+                  <p class="k-home__recipe-medium-title"><%= r[:title] %></p>
+                  <p class="k-home__recipe-medium-price"><%= r[:price] %></p>
+                </div>
+
+                <div class="k-home__tags">
+                  <span class="k-home__tag" title="Время">
+                    <%# иконку времени в фигме тянули отдельным svg asset; тут проще нейтральный кружок %>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" stroke="rgba(41,35,24,1)" stroke-width="1.6" opacity=".75"></circle>
+                      <path d="M12 7v5l3 2" stroke="rgba(41,35,24,1)" stroke-width="1.6" stroke-linecap="round" opacity=".75"></path>
+                    </svg>
+                    <%= r[:time] %>
+                  </span>
+
+                  <span class="k-home__tag"><%= r[:portions] %></span>
                 </div>
               </div>
-            </article>
+            </a>
           <% end %>
         </div>
 
-        <div class="load-more-wrapper">
-          <button class="load-more-btn">Показать ещё 5</button>
+        <div class="k-home__more-wrap">
+          <button class="k-home__more" type="button" id="kHomeMore">Показать ещё 5</button>
         </div>
       </section>
     </div>
-  </body>
-</html>
+  </main>
+
+  <script>
+    // 1) Tabs: делаем выбранный фильтр активным
+    (function(){
+      const tabs = Array.from(document.querySelectorAll(".k-home__filter"));
+      tabs.forEach(btn => {
+        btn.addEventListener("click", () => {
+          tabs.forEach(x => x.setAttribute("aria-selected", "false"));
+          btn.setAttribute("aria-selected", "true");
+
+          // Тут в проде ты дергаешь Turbo/Stimulus/Fetch и обновляешь ленту.
+          // Пока оставляем как UI-стейт.
+        });
+      });
+
+      // 2) “Показать еще”: мок, чтобы кнопка ощущалась живой
+      const more = document.getElementById("kHomeMore");
+      const feed = document.getElementById("kHomeFeed");
+      if (more && feed) {
+        more.addEventListener("click", () => {
+          more.disabled = true;
+          more.textContent = "Загружаем...";
+          setTimeout(() => {
+            // Дублируем пару карточек как демо.
+            const nodes = Array.from(feed.querySelectorAll(".k-home__recipe-medium")).slice(0, 1);
+            nodes.forEach(n => feed.appendChild(n.cloneNode(true)));
+            more.disabled = false;
+            more.textContent = "Показать ещё 5";
+          }, 450);
+        });
+      }
+    })();
+  </script>
+</div>

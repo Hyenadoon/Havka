@@ -1,0 +1,207 @@
+<%# app/views/onboarding/flow_2.html.erb %>
+<%# Flow 2 (Figma node: 137:2089). One file: HTML+CSS+JS. %>
+
+<%
+  img_logo = "https://www.figma.com/api/mcp/asset/552f06ac-67f6-4d98-8d3a-641381587557"
+  img_bars = "https://www.figma.com/api/mcp/asset/c1ec28f1-d038-4291-bae8-65bc7f89ca32"
+  img_recipe = "https://www.figma.com/api/mcp/asset/6b74fd1a-fc4e-49ac-a677-2364e50febe1" # image 31 в flow
+%>
+
+<div class="k-flow k-flow2">
+  <style>
+    :root{
+      --bg-secondary:#f9f3ea; --bg-primary:#fff9f0;
+      --text-900:#25211b; --text-800:#46413b; --text-800-61: rgba(41,35,24,0.61);
+      --line-300:#e5dfd6;
+      --btn-neutral-bg: rgba(41,35,24,0.05);
+      --accent:#ff5d34;
+      --blur:21px;
+      --r:16px; --r-md:24px; --r-lg:32px;
+      --max:840px; --pad:16px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{ margin:0; background:var(--bg-secondary); color:var(--text-900); font-family:var(--font); }
+    a{ text-decoration:none; color:inherit; }
+
+    .k-flow{ min-height:100vh; display:flex; flex-direction:column; }
+    .k-nav{
+      position:sticky; top:0; z-index:50;
+      background:var(--bg-primary);
+      border-bottom:1px solid var(--line-300);
+    }
+    .k-nav__top{ padding:8px var(--pad); display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .k-logo{ height:21px; width:153px; display:block; }
+    .k-iconbtn{
+      width:40px; height:40px; border-radius:var(--r);
+      border:0; background:var(--btn-neutral-bg);
+      backdrop-filter: blur(var(--blur));
+      display:grid; place-items:center;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .k-iconbtn:hover{ filter:brightness(1.02); transform:translateY(-1px); }
+    .k-iconbtn:active{ transform:translateY(0) scale(.98); }
+    .k-iconbtn img{ width:20px; height:20px; display:block; }
+
+    .k-layout{ width:100%; padding:24px var(--pad) 120px; display:flex; justify-content:center; }
+    .k-content{ width:100%; max-width:var(--max); display:flex; flex-direction:column; gap:24px; }
+
+    .k-counter{ display:flex; flex-direction:column; gap:12px; }
+    .k-counter__n{
+      margin:0; font-size:23px; line-height:1.3; letter-spacing:-0.576px;
+      color:#514242; font-weight:600;
+    }
+    .k-counter__t{
+      margin:0; font-size:16px; line-height:1.5; letter-spacing:-0.16px;
+      color:var(--text-800-61); font-weight:500;
+    }
+
+    .k-list{ display:flex; flex-direction:column; gap:12px; }
+    .k-card{
+      display:flex; gap:8px; align-items:stretch;
+      border-radius:14px;
+    }
+    .k-thumb{
+      width:133px; min-width:133px; height:120px;
+      border-radius:14px; overflow:hidden;
+      background:var(--bg-primary);
+      position:relative;
+    }
+    .k-thumb::before{
+      content:""; position:absolute; inset:0;
+      background: var(--bg-primary);
+    }
+    .k-thumb img{
+      position:absolute; left:50%; top:50%;
+      width:77px; height:77px;
+      transform: translate(-50%,-50%);
+      object-fit:cover; border-radius:999px;
+      box-shadow: inset 0 0 7px 3px rgba(255,255,255,0.95);
+    }
+    .k-info{ flex:1; padding:8px 0; display:flex; flex-direction:column; gap:16px; }
+    .k-titlewrap{ display:flex; flex-direction:column; gap:4px; }
+    .k-title{ margin:0; font-size:16px; line-height:1.5; letter-spacing:-0.16px; font-weight:700; color:var(--text-800); }
+    .k-price{ margin:0; font-size:16px; line-height:1.5; letter-spacing:-0.16px; font-weight:700; color:var(--accent); }
+
+    .k-tags{ display:flex; gap:4px; flex-wrap:wrap; align-items:center; }
+    .k-tag{
+      height:32px;
+      display:inline-flex; align-items:center; justify-content:center; gap:6px;
+      padding:6px 8px;
+      border-radius:48px;
+      background: rgba(41,35,24,0.05);
+      backdrop-filter: blur(var(--blur));
+      color: rgba(41,35,24,0.5);
+      font-size:14.3px; letter-spacing:-0.2145px; font-weight:600;
+      white-space:nowrap;
+    }
+    .k-tag svg{ width:18px; height:18px; opacity:.9; }
+
+    .k-bottom{
+      position:fixed; left:0; right:0; bottom:0;
+      background: rgba(255,249,240,0.92);
+      backdrop-filter: blur(var(--blur));
+      border-top:1px solid var(--line-300);
+      z-index:60;
+    }
+    .k-bottom__inner{
+      max-width:var(--max); margin:0 auto; padding:16px var(--pad);
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+    }
+    .k-btn{
+      border:0; border-radius:var(--r);
+      padding:16px;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      cursor:pointer;
+      font-weight:700; letter-spacing:-0.16px;
+      transition: transform .12s ease, filter .12s ease;
+      user-select:none;
+    }
+    .k-btn:hover{ filter:brightness(1.02); transform:translateY(-1px); }
+    .k-btn:active{ transform:translateY(0) scale(.99); }
+
+    .k-btn--dark{ background:#25211b; color:#fff9f0; }
+    .k-btn--disabled{
+      background: rgba(255,93,52,0.06);
+      color: rgba(255,93,52,0.22);
+      cursor:not-allowed;
+    }
+    .k-btn--wide{ padding:16px 32px; }
+
+    .k-ico{ width:24px; height:24px; display:block; }
+
+    @media (max-width: 720px){
+      .k-card{ flex-direction:column; }
+      .k-thumb{ width:100%; min-width:0; height:180px; }
+      .k-thumb img{ width:96px; height:96px; }
+      .k-info{ padding:8px 0 0; }
+    }
+  </style>
+
+  <header class="k-nav" role="banner">
+    <div class="k-nav__top">
+      <img class="k-logo" src="<%= img_logo %>" alt="Солянка" />
+      <button class="k-iconbtn" type="button" aria-label="Меню">
+        <img src="<%= img_bars %>" alt="" />
+      </button>
+    </div>
+  </header>
+
+  <main class="k-layout" role="main">
+    <div class="k-content">
+      <div class="k-counter">
+        <p class="k-counter__n">1</p>
+        <p class="k-counter__t">Выбрано блюд</p>
+      </div>
+
+      <div class="k-list">
+        <% 3.times do %>
+          <a class="k-card" href="#">
+            <div class="k-thumb" aria-hidden="true">
+              <img src="<%= img_recipe %>" alt="" />
+            </div>
+            <div class="k-info">
+              <div class="k-titlewrap">
+                <p class="k-title">Суп-пюре с грибами</p>
+                <p class="k-price">~ 150р</p>
+              </div>
+              <div class="k-tags">
+                <span class="k-tag">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9Z" stroke="currentColor" stroke-width="2.2"/>
+                  </svg>
+                  15 мин
+                </span>
+                <span class="k-tag">4 порции</span>
+              </div>
+            </div>
+          </a>
+        <% end %>
+      </div>
+    </div>
+  </main>
+
+  <footer class="k-bottom" role="contentinfo">
+    <div class="k-bottom__inner">
+      <button class="k-btn k-btn--dark" type="button" aria-label="Назад">
+        <svg class="k-ico" viewBox="0 0 24 24" fill="none">
+          <path d="M11 6L5 12l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="k-btn k-btn--disabled k-btn--wide" aria-disabled="true">
+        <svg class="k-ico" viewBox="0 0 24 24" fill="none">
+          <path d="M7 4h10v16H7z" stroke="currentColor" stroke-width="2.2" />
+          <path d="M9 8h6M9 12h6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+        Продукты
+      </div>
+
+      <span style="width:56px"></span>
+    </div>
+  </footer>
+</div>
